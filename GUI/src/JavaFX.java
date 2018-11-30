@@ -3,6 +3,8 @@
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -13,12 +15,19 @@ public class JavaFX extends Application {
     public static int whereInArray = 0;
 
     public static void main(String[] args) {
-        System.out.print("Hello world..");
+//        System.out.print("Hello world..");
         launch(args);
     }
 
+
+
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception {
+
+        Parent root = FXMLLoader.load(getClass().getResource("gui.fxml"));
+
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
 
     }
 
