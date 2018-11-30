@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui">
+   <children>
+      <TextArea layoutX="55.0" layoutY="323.0" prefHeight="0.0" prefWidth="492.0" text="The purpose of this is to help determine in a biopsied tumor is benign or malignant." />
+      <ImageView fitHeight="400.0" fitWidth="245.0" layoutX="178.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../nfs/s-l011/local/vol02/l/litterio/IdeaProjects/BioinformaticsTechniques/Data/pink_ribbon.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="272.0" layoutY="365.0" mnemonicParsing="false" text="Begin" />
+   </children>
+</AnchorPane>
