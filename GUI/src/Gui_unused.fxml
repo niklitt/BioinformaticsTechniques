@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane disable="true" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: pink;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui">
+   <children>
+      <Button fx:id="theNextButton" layoutX="272.0" layoutY="365.0" mnemonicParsing="false" onMouseClicked="#onClickBegin" text="Begin" />
+      <ImageView fitHeight="308.0" fitWidth="281.0" layoutX="179.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Data/pink_ribbon.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="theBackButton" disable="true" layoutX="214.0" layoutY="365.0" mnemonicParsing="false" text="Back" visible="false" />
+      <TextField id="theText" fx:id="theText" disable="true" layoutX="55.0" layoutY="325.0" prefHeight="26.0" prefWidth="491.0" style="-fx-background-color: transparent;" text="The purpose of this is to help determine in a biopsied tumor is benign or malignant." visible="false" />
+      <TextArea id="theText" fx:id="theText" layoutX="39.0" layoutY="197.0" prefHeight="128.0" prefWidth="378.0" text="The purpose of this is to help determine in a biopsied tumor is benign or malignant." />
+   </children>
+   <fx:script>
+      class onClickBegin implements ActionListener {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+      whereInArray = 0; // Just in case it isn't already set for some reason
+
+      }
+
+      }</fx:script>
+</AnchorPane>
