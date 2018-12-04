@@ -1,10 +1,14 @@
 //
 
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /*****************************
  * onClickBegin - clear screen, first input screen,
@@ -15,7 +19,7 @@ import java.awt.event.ActionListener;
 
 public class JavaFX extends JFrame {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         JavaFX calculator = new JavaFX();
         calculator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -34,7 +38,7 @@ public class JavaFX extends JFrame {
 
     private JTextArea inputArea = new JTextArea("Enter input here");
 
-    private JLabel pinkRibbon = new JLabel(new ImageIcon("../Data/pink_ribbon.png"));
+    private JLabel pinkRibbon;
 
     private static double[] userArray = new double[30];
 
@@ -49,8 +53,10 @@ public class JavaFX extends JFrame {
 
     private boolean isBenign;
 
-    public JavaFX() {
+    public JavaFX() throws IOException {
         super("Breast Cancer Awareness");
+
+        this.setLocationRelativeTo(null); // Put in middle of screen when opened
 
         for(int i = 0; i < 30; i++) {
             userArray[i] = 0.0;
@@ -75,13 +81,18 @@ public class JavaFX extends JFrame {
         theSubmitButton.addActionListener(new onClickSubmit());
 
         text.setLineWrap(true);
+//        text.isEditable(false);
         inputArea.setEnabled(false);
         inputArea.setVisible(false);
 
 //        BufferedImage myPicture = ImageIO.read(new File("../../pink_ribbon.png"));
 //        pinkRibbon = new JLabel(new ImageIcon(myPicture));
-        pinkRibbon.setIcon(new ImageIcon("../../Data/pink_ribbon.png"));
-        pinkRibbon.setVisible(true);
+//        JLabel pinkRibbon = new JLabel(new ImageIcon(getClass()
+//                .getResource("../../Data/pink_ribbon.png")));
+//        pinkRibbon.setIcon(new ImageIcon("../../Data/pink_ribbon.png"));
+//        pinkRibbon.setVisible(true);
+        BufferedImage pic = ImageIO.read(new File("../BioinformaticsTechniques/Data/pink_ribbon.png"));
+        pinkRibbon = new JLabel(new ImageIcon(pic));
 
         // Formats the GridLayout
         JPanel pinkSpace = new JPanel();
@@ -111,7 +122,7 @@ public class JavaFX extends JFrame {
         this.add(panel,BorderLayout.CENTER);
         container.setBackground(Color.pink);
         panel.setBackground(Color.pink);
-        setSize(425,250);
+        setSize(425,350);
         setVisible(true);
     }
 
@@ -192,12 +203,15 @@ public class JavaFX extends JFrame {
 
             if(isNumeric(inputArea.getText())) {
 
+                theSubmitButton.setVisible(false);
+                theSubmitButton.setEnabled(false);
+
                 theBackButton.setVisible(false);
                 theBackButton.setEnabled(false);
 
                 J48_Tree();
-                JavaFX_Supplemental tester = null;
-//                Boolean bayesTest = tester.bayes(userArray);
+                JavaFX_Supplemental tester = new JavaFX_Supplemental();
+                Boolean bayesTest = tester.bayes(userArray);
 
                 userArray[whereInArray] = Double.parseDouble(inputArea.getText());
 
@@ -205,9 +219,9 @@ public class JavaFX extends JFrame {
                     text.setText("Based on the given information, there is a 93.15% chance the tumor is benign!");
                 } else if (!isBenign) {
 
-//                    String lateInconclusiveEarly = tester.cluster(userArray);
-                    text.setText("Based on the given information, there is a 93.15% chance the tumor is malignant. ");
-//                    + "The stage of the tumor is " + lateInconclusiveEarly);
+                    String lateInconclusiveEarly = tester.cluster(userArray);
+                    text.setText("Based on the given information, there is a 93.15% chance the tumor is malignant. "
+                    + "The stage of the tumor is " + lateInconclusiveEarly + ".");
 
                 }
 

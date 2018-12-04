@@ -5,11 +5,6 @@ import java.util.Scanner;
 
 public class JavaFX_Supplemental {
 
-    public static void main(String[] args)
-    {
-
-    }
-
     //Pass in the data that the user has input, this function will return true if it is malignant or false if benign
     public boolean bayes(double data[]) {
 
@@ -481,7 +476,7 @@ public class JavaFX_Supplemental {
     }
 
 
-    public static double multiply (double currentProd,double nextProd)
+    public double multiply (double currentProd,double nextProd)
     {
         return currentProd*nextProd;
     }
