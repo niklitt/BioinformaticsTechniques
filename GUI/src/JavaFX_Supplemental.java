@@ -1,11 +1,20 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class JavaFX_Supplemental {
 
-    //Pass in the data that the user has input, this function will return true if it is malignant or false if benign
+    //Pass in the data that the user has input, this function will return false if it is malignant or true if benign
+    public double[] testEarly = {14.68,20.13,94.74,684.5,.09867,.072,.07395,.0529,.1586,.05922,.4727,1.24,3.195,45.4,.0075718,.01162,.01998,.01109,.0141,.002085,19.07,30.88,123.4,1138,.1464,.1871,.2914,.1609,.3029,.08216};
+
+    public static void main(String[] args) {
+        JavaFX_Supplemental tester = new JavaFX_Supplemental();
+        System.out.println("the output is " + tester.cluster(tester.testEarly) + ".");
+    }
+
     public boolean bayes(double data[]) {
 
         double mProb=1;
@@ -467,11 +476,11 @@ public class JavaFX_Supplemental {
 
         if (actualMal > actualBen)
         {
-            return true;
+            return false;
         }
         else
         {
-            return false;
+            return true;
         }
     }
 

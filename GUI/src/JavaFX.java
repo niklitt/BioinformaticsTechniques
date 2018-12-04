@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,11 +19,11 @@ import java.io.IOException;
  * onClickSubmit - clear screen, performs the analysis and prediction, spits out prediction and accuracy
  *****************************/
 
-public class JavaFX extends JFrame {
+public class JavaFX extends JFrame implements KeyListener {
 
     public static void main(String[] args) throws IOException {
-        JavaFX calculator = new JavaFX();
-        calculator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JavaFX breastCancerAwareness = new JavaFX();
+        breastCancerAwareness.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private JPanel panel = new JPanel();
@@ -114,6 +116,7 @@ public class JavaFX extends JFrame {
         panel.add(theNextButton);
         panel.add(pinkS);
         panel.add(inputArea);
+        inputArea.addKeyListener(this);
 
 
         Container container = getContentPane();
@@ -124,6 +127,48 @@ public class JavaFX extends JFrame {
         panel.setBackground(Color.pink);
         setSize(425,350);
         setVisible(true);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        if(e.getSource() ==  inputArea && e.getKeyChar() == KeyEvent.VK_ENTER && whereInArray != 29)
+        {
+            if(isNumeric(inputArea.getText())) {
+
+                if(whereInArray == 0) { // Enables the back button to use after the first click of the next button
+                    theBackButton.setVisible(true);
+                    theBackButton.setEnabled(true);
+                }
+
+                String convertedText = inputArea.getText().replace("\n","");
+                userArray[whereInArray] = Double.parseDouble(convertedText);
+
+                whereInArray++;
+                text.setText(textArray[whereInArray]);
+
+                if(whereInArray == 29) {
+                    theNextButton.setEnabled(false); // Disables the next and back button after all values are entered
+                    theNextButton.setVisible(false);
+
+                    theSubmitButton.setEnabled(true);
+                    theSubmitButton.setVisible(true);
+
+                }
+
+            } else {
+                text.setText("Please enter a number. " + textArray[whereInArray]);
+            }
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 
     class onClickBegin implements ActionListener {
@@ -209,20 +254,29 @@ public class JavaFX extends JFrame {
                 theBackButton.setVisible(false);
                 theBackButton.setEnabled(false);
 
+                inputArea.setVisible(false);
+                inputArea.setEnabled(false);
+
                 J48_Tree();
                 JavaFX_Supplemental tester = new JavaFX_Supplemental();
-                Boolean bayesTest = tester.bayes(userArray);
+                Boolean bayesTest = tester.bayes(userArray); // false if it is malignant or true if benign
 
                 userArray[whereInArray] = Double.parseDouble(inputArea.getText());
 
-                if (isBenign) {
+
+                if (isBenign && bayesTest) {
+
+
                     text.setText("Based on the given information, there is a 93.15% chance the tumor is benign!");
-                } else if (!isBenign) {
+
+                } else if (!isBenign && !bayesTest) {
 
                     String lateInconclusiveEarly = tester.cluster(userArray);
                     text.setText("Based on the given information, there is a 93.15% chance the tumor is malignant. "
                     + "The stage of the tumor is " + lateInconclusiveEarly + ".");
 
+                } else { // If they disagree
+                    text.setText("Based on the given information, the results are inconclusive");
                 }
 
             } else {
